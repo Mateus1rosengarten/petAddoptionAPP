@@ -1,0 +1,103 @@
+
+
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height:80vh;
+    left: 32vw;
+    top:15vh;
+   
+    border: 1px solid black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-card{
+ 
+    margin: 1%;
+    padding: 1%;
+    margin-top: 28vh;
+    margin-left: 2vw;
+    left: 5vw; 
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.cardMyPet {
+    position: absolute;
+    width: 200px;
+    height: 250px;
+    top: 0px;
+    left: 0px;
+    border: 1px solid blue;
+}
+
+.h6-card{
+    font-size: 100%;
+    white-space: nowrap;
+    display: inline;
+    font-style: italic;
+  
+    
+}
+
+.h6-result{
+    font-weight: bold;
+    font-size: 17px;
+    white-space: nowrap;
+    display: inline-block;
+    margin-bottom: 1vh;
+
+}
+
+.img-card {
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    margin-bottom: 5px;
+    
+}
+
+.field-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .field-label {
+    
+    font-weight: bold;
+  }
+  
+  .field-value {
+    /* Add styling for the value here, e.g., margin-left, color, etc. */
+    margin: 4%;
+  } 
+
+
+  @media (max-width: 768px) {
+    /* Adjust styles for smaller screens */
+    .card {
+        position: absolute;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        
+     
+      
+    }
+    .info-card {
+        font-size: 14px;
+        margin-top: 30vh;
+    }
+
+    .field-label  .field-value {
+        margin: 0;
+        padding: 0;
+        margin-left: 10vw;
+
+    }
+  }

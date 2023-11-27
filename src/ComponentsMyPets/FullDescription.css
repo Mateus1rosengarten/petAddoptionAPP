@@ -1,0 +1,54 @@
+.card {
+    height: 60vh;
+    width: 40vw;
+    position: absolute;
+    top: 100px;
+    left: 420px;
+}
+
+.user-card {
+    height: 60vh;
+    width: 40vw;
+    position: absolute;
+    top: 100px;
+    left: 420px;
+}
+
+
+.info-card{
+    position: absolute;
+    width: 40vw;
+    height: 30vh;
+    top: 200px;
+    font-size: 30px;
+}
+
+.info-user-card{
+    position: absolute;
+    width: 40vw;
+    height: 30vh;
+    top: 50px;
+    left: 30px;
+    font-size: 30px;
+}
+
+.info-card h6{
+    font-size: 20px;
+}
+
+.info-user-card h6{
+    font-size: 20px;
+}
+
+.save-for-later {
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    
+}
+
+.label-save-for-later {
+    position: absolute;
+    right: 70px;
+    bottom: 20px;
+}
