@@ -1,0 +1,65 @@
+.h2-text{
+   
+    margin-top: 10vh;
+    text-align: center;
+    font-size: 80px;
+    font-family: Verdana,sans-serif;
+
+}
+
+.user-img{
+    border-radius: 50%;
+    width: 20%;
+    height: 55%;
+    position: absolute;
+    top: 6vh;
+    right: 20vw;
+} 
+
+.Form-Box {
+    position: absolute;
+    width: 40vw;
+    height: 70vh;
+    top: 200px;
+    left:30vw;
+    
+}
+
+.input-prof , .textarea-profile{
+    position: relative;
+    top: vh;
+    left: 15vw;
+    
+   width: 300px;
+   display: block;
+   margin: 5px;
+}
+
+.label-prof {
+    font-weight: bold;
+    position: relative;
+    top: 4vh;
+    left: 1vw;
+}
+
+label{
+    font-weight: bold;
+    position: relative;
+    left: 1vw;
+
+}
+
+.save-button{
+    position: absolute;
+    right: 34vw;
+    bottom: 11vh;
+    width: 20vw;
+    border-radius: 5px!important;
+    background-color: #f2f2f2!important;
+    padding: 11px 13px!important;
+    color: #1DA1F2!important;
+    font-weight: 600!important;
+    margin: 5px;
+
+}
+
