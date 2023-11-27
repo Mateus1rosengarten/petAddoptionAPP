@@ -1,0 +1,73 @@
+.users-list{
+    position: relative;
+    top: 12vh;
+    left: 5vw;
+    height:50vh;
+    width: 100%;
+}
+
+
+.hr-list{
+    position: relative;
+    width: 100vw;
+    top: 30vh;
+    left: 0;
+    
+}
+
+.result-pet-list{
+  position: relative;
+     
+    width: 60vw;
+    display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  gap: 5%; 
+  margin: 0 auto; 
+ margin-top: 20vh;
+    margin-left: 20vw;
+    transition: 0.3s;
+   
+  }
+  
+
+.addpet-button{
+   
+    position: relative;
+    top: 30vh;
+    left: 2vw;
+   height: 7vh;
+   width: 12vw;
+   
+     border-radius: 5px!important;
+     background-color: #f2f2f2!important;
+     padding: 11px 13px!important;
+     color: #1DA1F2;
+     font-weight: 600!important;
+     margin: 1%;
+}
+
+
+
+@media (max-width: 1200px) {
+  .result-pet-list {
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr)); /* Adjust for smaller screens */
+    gap: 1% 5%;
+  
+    margin-right: 15vw ;
+    margin-left: 15vw;
+    margin-bottom: 0;
+    font-size: 8px;
+  }
+
+  .addpet-button{
+ 
+      width: 30vw; /* Adjust button width for smaller screens */
+      font-size: 14px; /* Adjust font size for smaller screens */
+      margin-bottom: 10vh;
+     }
+
+  .button-responsive{
+    width: 100vw ;
+    overflow: auto;
+  }
+}
