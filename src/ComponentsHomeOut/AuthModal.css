@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
+
+  .modal-auth, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  }
+
+  .overlay {
+    background: rgba(49,49,49,0.8);
+  }
+
+  .modal-content {
+    display: block !important;
+    position: fixed !important;
+    top: 5vh !important;
+    left: 40vw !important;
+    padding: 2% !important;
+    z-index: 999 !important;    
+    max-width: 350px !important;
+    background-color: #F7F7F7 !important;
+    margin: 0 auto!important;
+    border-radius: 2px!important;
+    border-radius: 3%!important;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3)!important;
+    overflow: hidden!important;
+  
+  }
+
+  .h1-modal-content {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 1.8em;
+    font-family: "Montserrat"
+  }
+  .input-modal{
+    height: 44px;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    padding: 0 8px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
+  }
+
+  .modal-signup-button{
+    width:10vw;
+    
+    border-radius: 5px!important;
+    background-color: #f2f2f2!important;
+    padding: 11px 13px!important;
+    color: black!important;
+    font-weight: 600!important;
+    right: 1vw;
+    position: relative;
+    background-color: #1DA1F2 !important;
+ 
+
+
+  }
+
+  .modal-exit-button{
+
+   
+      position: absolute;
+      color: blue;
+      padding: 0 2px;
+      right: 1vw;
+      top: 2vh;
+      width: 25px;
+      height: 25px;
+      
+    }
+      .modal-exit-button 
+      :hover {
+      opacity: 1;
+    }
+    .modal-exit-button :before, .close:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: #333;
+    }
+    .modal-exit-button :before {
+      transform: rotate(45deg);
+    }
+    .modal-exit-button :after {
+      transform: rotate(-45deg);
+
+  }
+  
+
+
+
+
+  
+  

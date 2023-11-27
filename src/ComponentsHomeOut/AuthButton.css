@@ -1,0 +1,16 @@
+.button-login,.button-signUp{
+    
+    border-radius: 5px!important;
+background-color: #f2f2f2!important;
+padding: 11px 13px!important;
+color: #1DA1F2;
+font-weight: 600!important;
+margin: 5px;
+
+}
+
+.buttons-div{
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
