@@ -23,7 +23,7 @@ Ongoing work to address design and responsiveness concerns.
    - Search and browse available pets. <br>
    - Users can adopt/foster/save pets.
   
-4 **Admin Dashboard:**
+4 **Admin Dashboard:** <br>
 Admins can access the "Admin Dashboard" page to view all users and pets in the database.
 
 
