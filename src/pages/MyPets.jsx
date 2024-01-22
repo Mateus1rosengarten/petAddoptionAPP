@@ -116,7 +116,7 @@ function MyPets () {
 
 
   <div className="adopted-list"> 
-  {toggle && adoptedList.length === 0 && <h1 className="fostered-h1-no">You dont have any pet</h1>}
+  {toggle && adoptedList.length === 0 && <h1 className="fostered-h1-no">No pet adopted</h1>}
   {adoptedList.length !== 0 &&  <h1 className="adopted-h1">Addopted</h1>}
 {adoptedList  && adoptedList.map((item) =>{
   return (
@@ -133,7 +133,7 @@ handleButton={() => {navigate(`/pet/${item.name}`)}}
 
 </div>
 <div className="fostered-list"> 
-{toggle && fosteredList?.length === 0 && <h1 className="fostered-h1-no">You dont foster any pet</h1>}
+{toggle && fosteredList?.length === 0 && <h1 className="fostered-h1-no">No pet fostered</h1>}
 {fosteredList?.length !== 0 && <h1 className="fostered-h1">Fostering </h1>}
 {fosteredList && fosteredList.map((item) =>{
   return (
@@ -151,7 +151,7 @@ handleButton={() => {navigate(`/pet/${item.name}`)}}
 
 <div className="saved-list"> 
 
-{toggle && savedList.length === 0 && <h1 className="saved-h1-no">You dont have pets saved</h1>}
+{toggle && savedList.length === 0 && <h1 className="saved-h1-no">No pet saved</h1>}
 { savedList?.length !== 0 && <h1 className="saved-h1"> Saved </h1>}
 {savedList && savedList.map((item) =>{
   return ( 
