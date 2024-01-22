@@ -1,14 +1,12 @@
 import SearchComponent from "../ComponentsSearch/SearchBar";
 import axios from "axios";
 import { useContext } from "react";
-import { petContext, advSearch, setAdvSearch } from "../Context/PetContext";
+import { petContext} from "../Context/PetContext";
 import { useNavigate } from "react-router";
 import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
-import { isAccordionItemSelected } from "react-bootstrap/esm/AccordionContext";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Spinner, Stack } from "@chakra-ui/react";
-import { toast } from "react-toastify";
+import {Stack } from "@chakra-ui/react";
 
 function SearchPage() {
   const { setPetInfo } = useContext(petContext);
@@ -70,11 +68,12 @@ function SearchPage() {
               Array.isArray(stateDogType) &&
               stateDogType.map((item) => (
                 <div className="cardPet" key={item.id}>
-                  <img src="" alt="" />
+            
                   <div className="containerPet">
                     <img className="img-search" src={item.image} alt=""></img>
-                    <hr className="hr-card"></hr>
+                 
                     <h4 className="h4-card">{item.name.toUpperCase()}</h4>
+                      
                     <p
                       className={
                         item.status === "Adopted"
@@ -88,6 +87,7 @@ function SearchPage() {
                     >
                       {item.status}
                     </p>
+                  
 
                     <button
                       onClick={() => {
@@ -107,7 +107,6 @@ function SearchPage() {
                 <div className="cardPet" key={item.id}>
                   <div className="containerPet">
                     <img className="img-search" src={item.image} alt=""></img>
-                    <hr className="hr-card"></hr>
                     <h4 className="h4-card">{item.name.toUpperCase()}</h4>
                     <p
                       className={
@@ -141,7 +140,7 @@ function SearchPage() {
                 <div className="cardPet" key={item.id}>
                   <div className="containerPet">
                     <img className="img-search" src={item.image} alt=""></img>
-                    <hr className="hr-card"></hr>
+                    
                     <h4 className="h4-card">{item.name.toUpperCase()}</h4>
                     {item.status && (
                       <p
