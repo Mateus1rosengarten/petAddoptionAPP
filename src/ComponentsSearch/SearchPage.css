@@ -204,7 +204,7 @@
 .adopted-list {
   position: absolute !important;
   top: 25vh !important;
-  left: 15vw !important;
+  left: 5vw !important;
   width: 200px !important;
   height: 200px !important;
 }
@@ -212,7 +212,7 @@
 .fostered-list {
   position: absolute !important;
   top: 25vh !important;
-  left: 44vw !important;
+  left: 43vw !important;
   width: 200px !important;
   height: 200px !important;
 }
@@ -224,7 +224,7 @@
 .saved-list {
   position: absolute !important;
   top: 25vh !important;
-  left: 75vw !important;
+  left: 80vw !important;
   width: 200px !important;
   height: 200px !important;
 }
@@ -240,7 +240,6 @@
 .adopted-h1-no {
   font-family: Arial, Helvetica, sans-serif !important;
   position: absolute;
-  margin-right: 10vw;
   font-weight: bold;
   white-space: nowrap;
 }
