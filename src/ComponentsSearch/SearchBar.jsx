@@ -5,9 +5,8 @@ import { petContext,searchList,setSearchList } from "../Context/PetContext";
 import { globalStates } from "../Context/StatesContexts";
 import { Checkbox,Stack} from "@chakra-ui/react";
 import '@coreui/coreui/dist/css/coreui.min.css'
-import { cilList, cilShieldAlt,cilAnimal
-} from '@coreui/icons';
-import { ChatIcon } from "@chakra-ui/icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faCat,faDog} from '@fortawesome/free-solid-svg-icons'
 import axios from "axios";
 
 
@@ -108,13 +107,13 @@ function SearchComponent({ inputCatValue, inputDogValue}) {
           <Checkbox size='lg' margin='1%' colorScheme='blue' disabled={queryDog} onChange={onCatChangeCheckBox}
          
             
-            id="cat"> <span style={{ fontFamily : 'Verdana, Geneva, Tahoma, sans-serif;' }}>CAT </span></Checkbox>
+            id="cat"> <span style={{ fontFamily : 'Verdana, Geneva, Tahoma, sans-serif;' }}>CAT  <FontAwesomeIcon style={{color:'brown',marginLeft:'0.5vw'}} icon={faCat} /> </span></Checkbox>
           
      
 
         <Checkbox size="lg" margin='1%' colorScheme='blue' disabled={queryCat}   onChange={onDogChangeCheckBox}
          
-            id="dog"> <span style={{ fontFamily : 'Verdana, Geneva, Tahoma, sans-serif;' }}> DOG</span> </Checkbox >
+            id="dog"> <span style={{ fontFamily : 'Verdana, Geneva, Tahoma, sans-serif;' }}> DOG <FontAwesomeIcon style={{color:'brown',marginLeft:'0.3vw'}} icon={faDog} /></span> </Checkbox >
             </Stack> 
           
 

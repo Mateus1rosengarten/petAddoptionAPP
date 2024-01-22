@@ -120,7 +120,7 @@ function ModalSearch({ toggleModal }) {
                 colorScheme="red"
                 size="xs"
                 marginTop="0px"
-                marginLeft="12vw"
+                marginLeft="15vw"
                 marginBottom="2vh"
               >
                 Close
