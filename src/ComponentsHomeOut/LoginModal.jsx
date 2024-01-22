@@ -69,7 +69,7 @@ function LoginModal({ toggleModal }) {
 
 
         <Box   width='4vw'> 
-        <Button className="button-exit-login" width="100%" variant='outline'  onClick={toggleModal} colorScheme="red" size='xs' marginTop="0px" marginLeft ='12vw' marginBottom='2vh' >
+        <Button className="button-exit-login" width="100%" variant='outline'  onClick={toggleModal} colorScheme="red" size='xs' marginTop="0px" marginLeft ='14vw' marginBottom='2vh' >
         Close
       </Button> </Box>
 
@@ -84,17 +84,7 @@ function LoginModal({ toggleModal }) {
             } id='login'  placeholder='email' />
          </FormControl>
 
-          {/* <h1 className="h1-modal-content">Login to your account</h1> */}
-
-          {/* <input
-            className="input-modal"
-            onChange={(e) =>
-              setLoginObject({ ...loginObject, email: e.target.value })
-            }
-            type="email"
-            id="login"
-            placeholder="email"
-          /> */}
+        
  <FormControl marginBottom="20px">
      
      <FormLabel>Password</FormLabel>
@@ -105,28 +95,13 @@ function LoginModal({ toggleModal }) {
         }  />
       </FormControl>
 
-          {/* <input
-            className="input-modal"
-            onChange={(e) =>
-              setLoginObject({ ...loginObject, password: e.target.value })
-            }
-            type="password"
-            id="pass"
-            placeholder="password"
-          /> */}
+     
 
       <Button className="submit-button-login"  onClick={handleLogin} colorScheme='linkedin'  marginTop="20px" width="100%">
         Login
       </Button>
       </ChakraProvider> 
-          {/* <button onClick={handleLogin} className="modal-signup-button">
-            Login
-          </button> */}
-
-
-          {/* <button onClick={toggleModal} className="modal-exit-button">
-            X
-          </button> */}
+        
         </div>
       </div>
     </div> 

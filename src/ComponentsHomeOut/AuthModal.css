@@ -17,11 +17,12 @@
   .modal-content {
     display: block !important;
     position: fixed !important;
-    top: 5vh !important;
+    top: 1vh !important;
     left: 40vw !important;
     padding: 2% !important;
     z-index: 999 !important;    
     max-width: 350px !important;
+    max-height: 98vh;
     background-color: #F7F7F7 !important;
     margin: 0 auto!important;
     border-radius: 2px!important;
@@ -67,8 +68,12 @@
 
 
   }
-
   .modal-exit-button{
+    margin-left: 14vw !important;
+    margin-bottom:2vh;
+  }
+
+  /* .modal-exit-button{
 
    
       position: absolute;
@@ -98,7 +103,10 @@
     .modal-exit-button :after {
       transform: rotate(-45deg);
 
-  }
+  } */
+
+
+ 
   
 
 

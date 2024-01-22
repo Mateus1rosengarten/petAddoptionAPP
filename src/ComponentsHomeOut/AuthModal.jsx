@@ -9,7 +9,6 @@ import {  Box,
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Button,
   ChakraProvider,
   CSSReset,
@@ -105,7 +104,7 @@ function AuthModal({ toggleModal }) {
           <CSSReset/> 
         
         <Box width='4vw'> 
-        <Button className="modal-exit-button" width="100%" variant='outline'  onClick={toggleModal} colorScheme="red" size='s' marginTop="0px" marginLeft ='12vw' marginBottom='2vh' >
+        <Button className="modal-exit-button" width="100%" variant='outline'  onClick={toggleModal} colorScheme="red" size='sm' >
         Close
       </Button> </Box>
           <h1 className="h1-modal-content">Create your account </h1>
@@ -125,16 +124,6 @@ function AuthModal({ toggleModal }) {
 
       </FormControl>
 
-            {/* <label className="label-name" htmlFor="name">
-              Name
-            </label>
-            <input
-              onChange={(e) => setValue({ ...value, name: e.target.value })}
-              className="input-modal"
-              type="text"
-              id="name"
-            /> */}
-
   <FormControl marginBottom="10px">
 <FormLabel> LastName</FormLabel>
   
@@ -147,15 +136,7 @@ function AuthModal({ toggleModal }) {
 
  </FormControl>
 
-            {/* <label className="label-lastname" htmlFor="LastName">
-              Last Name
-            </label>
-            <input
-              onChange={(e) => setValue({ ...value, lastName: e.target.value })}
-              className="input-modal"
-              type="text"
-              id="LastName"
-            /> */}
+      
 
 <FormControl marginBottom="10px">
 <FormLabel> Number</FormLabel>
@@ -171,15 +152,6 @@ function AuthModal({ toggleModal }) {
 
 
 
-            {/* <label className="label-number" htmlFor="number">
-              Phone Number
-            </label>
-            <input
-              onChange={(e) => setValue({ ...value, number: e.target.value })}
-              className="input-modal"
-              type="text"
-              id="number"
-            /> */}
             
 
             <FormControl marginBottom="10px">
@@ -193,15 +165,6 @@ function AuthModal({ toggleModal }) {
 
  </FormControl>
 
-            {/* <label className="label-email" htmlFor="e-mail">
-              Email
-            </label>
-            <input
-              onChange={(e) =>  {setValue({ ...value, email: e.target.value })} }
-              className="input-modal"
-              type="email"
-              id="e-mail"
-            /> */}
 
 
 <FormControl marginBottom="10px">
@@ -214,16 +177,7 @@ function AuthModal({ toggleModal }) {
               placeholder={'Choose  your password'}
             />
  </FormControl>
-
-            {/* <label className="label-pass" htmlFor="pass">
-              Password
-            </label>
-            <input
-              onChange={(e) => setValue({ ...value, password: e.target.value })}
-              className="input-modal"
-              type="password"
-              id="pass"
-            /> */} 
+ 
             <FormControl marginBottom="10px">
 <FormLabel>Repeat Password</FormLabel>
   
@@ -235,18 +189,6 @@ function AuthModal({ toggleModal }) {
             />
  </FormControl>
 
-            {/* <label
-              className="label-passConfirmation"
-              htmlFor="passConfirmation"
-            >
-              Repeat your Password{" "}
-            </label>
-            <input
-            onChange={(e) => setValue({...value,repeatPassword : e.target.value})}
-              className="input-modal"
-              type="password"
-              id="passConfirmation"
-            /> */}
           <Button className="submit-button-auth" type='submit' onClick={handleSubmit} colorScheme='linkedin'  marginTop="20px" width="100%">
         SignUp
       </Button>
