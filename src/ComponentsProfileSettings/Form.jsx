@@ -5,43 +5,35 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Button,
 } from "@chakra-ui/react";
 import {
-  EmailIcon,
   PhoneIcon,
   LockIcon,
-  EditIcon,
   CheckCircleIcon,
 } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { userStates, userImage,setUserImage } from "../Context/UserContext";
-import { useNavigate } from "react-router";
-import axios from "axios";
-import { upload } from "@testing-library/user-event/dist/upload";
+import { userStates} from "../Context/UserContext";
+
 
 function Form({
   handleUpdate,
   nameValue,
   lastNameValue,
   numberValue,
-  imageValue,
   ImgFromMongo,
 }) {
 
   const { userImage,setUserImage } = useContext(userStates)
-  const { update, setUpdate } = useContext(userStates); /// STATE THAT REPRESENTS THE NEW OBJECT INFO
-  const { user } = useContext(userStates); // ARRAY WITH ALL USERS AND ALL MONGO INFO
-  const {trigger,setTrigger} = useContext(userStates)
+  const { update, setUpdate } = useContext(userStates); 
+  const {setTrigger} = useContext(userStates)
 
   useEffect(() => {
     console.log("new photo", userImage);
   }, [userImage]);
 
   const handleChanges = () => {
-    /// AFTER CLICK SAVE CHANGES DO ALL THE MAGIC
 
     uploadImage();
 
@@ -62,10 +54,6 @@ function Form({
      
     }
   };
-
-  // useEffect(() => {
-  //   uploadImage()
-  // },[userImage])
 
 
 
@@ -96,14 +84,10 @@ function Form({
         try {
 
           update.image = data.url
-          // setUpdate((prevUpdate) => ({
-          //   ...prevUpdate,
-          //   image: imageUrl, // Update the user's image URL
-          // }));
+      
 
           setTimeout(() => {
             setTrigger(true)
-            console.log('upInsideTimeOut3s',update)
             
           }, 10000);
 
@@ -143,7 +127,7 @@ function Form({
       >
         <FormControl marginBottom="20px">
           <FormLabel>
-            <CheckCircleIcon mr={2} />
+            <CheckCircleIcon mr={2} style={{color:'brown'}}  />
             Name
           </FormLabel>
 
@@ -157,7 +141,7 @@ function Form({
 
         <FormControl marginBottom="20px">
           <FormLabel>
-            <CheckCircleIcon mr={2} />
+            <CheckCircleIcon mr={2} style={{color:'brown'}} />
             Last Name
           </FormLabel>
           <Input
@@ -173,7 +157,7 @@ function Form({
 
         <FormControl marginBottom="20px">
           <FormLabel>
-            <PhoneIcon mr={2} />
+            <PhoneIcon mr={2} style={{color:'brown'}} />
             Phone Number
           </FormLabel>
           <Input
@@ -189,7 +173,7 @@ function Form({
 
         <FormControl marginBottom="20px">
           <FormLabel>
-            <LockIcon mr={2} />
+            <LockIcon mr={2} style={{color:'brown'}}  />
             New Password
           </FormLabel>
           <Input
@@ -205,7 +189,7 @@ function Form({
 
         <FormControl marginBottom="20px">
           <FormLabel>
-            <LockIcon mr={2} />
+            <LockIcon mr={2} style={{color:'brown'}}  />
             Repeat Password
           </FormLabel>
           <Input
@@ -219,13 +203,9 @@ function Form({
           />
         </FormControl>
 
-        {/* <FormControl marginBottom="20px">
-        <FormLabel><EditIcon mr={2} />Short Biography</FormLabel>
-        <Textarea placeholder={ bioValue? bioValue : "Write a short biography about yourself"}  onChange={(e) => e.target.value.length !== 0 && setUpdate({ ...update, bio: e.target.value }) }
-          id="bio" />
-      </FormControl> */}
+   
 
-        <FormControl position="absolute" right="20vw" top="40vh" width="20vw">
+        <FormControl position="absolute" right="23vw" top="48vh" width="20vw">
           <Input
             type="file"
             name="image"
