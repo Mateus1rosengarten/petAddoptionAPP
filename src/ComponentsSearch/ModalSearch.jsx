@@ -1,12 +1,7 @@
 import axios from "axios";
 import { useRef, useContext } from "react";
 import {
-  petContext,
-  advSearch,
-  setAdvSearch,
-  stateFullSearch,
-  setStateFullSearch,
-  queryCat,setQueryCat,setQueryDog,queryType,setQueryType,searchList,searchListTwo,setSearchList,setSearchListTwo
+  petContext
 } from "../Context/PetContext";
 import { globalStates } from "../Context/StatesContexts";
 import {
@@ -110,7 +105,7 @@ function ModalSearch({ toggleModal }) {
   return (
     <div className="modal-auth">
       <div className="overlay">
-        <div className="modal-content">
+        <div className="modal-content-search">
           <FormControl marginBottom="20px">
             <Box width="4vw">
               <Button
