@@ -192,6 +192,7 @@
 .seemore-button {
   height: 6vh;
   width: 21.5vw;
+
   background-color: #f2f2f2 !important;
   color: #1da1f2;
   font-weight: 600 !important;
@@ -231,8 +232,15 @@
 .adopted-h1 {
   font-family: Arial, Helvetica, sans-serif !important;
   position: absolute;
-  left: -2.5vw;
-  top: 0vh;
+  color: #367c2b;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.adopted-h1-no {
+  font-family: Arial, Helvetica, sans-serif !important;
+  position: absolute;
+  margin-right: 10vw;
   font-weight: bold;
   white-space: nowrap;
 }
@@ -240,16 +248,31 @@
 .saved-h1 {
   font-family: Arial, Helvetica, sans-serif !important;
   position: absolute;
-  left: -2.5vw;
-  top: 0vh;
+  color:#a51c30;
+
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.saved-h1-no {
+  font-family: Arial, Helvetica, sans-serif !important;
+  position: absolute;
+
   font-weight: bold;
   white-space: nowrap;
 }
 .fostered-h1 {
   font-family: Arial, Helvetica, sans-serif !important;
   position: absolute;
-  left: -2.5vw;
-  top: 0vh;
+  color: #1da1f2;
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.fostered-h1-no {
+  font-family: Arial, Helvetica, sans-serif !important;
+  position: absolute;
+ 
   white-space: nowrap;
   font-weight: bold;
 }
