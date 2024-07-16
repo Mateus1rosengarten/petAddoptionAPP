@@ -1,4 +1,4 @@
-import Form from "../../ComponentsAdmPages/FormAdd";
+import Form from "../../ComponentsAdmPages/FormAddPet";
 import { ChakraProvider, CSSReset } from "@chakra-ui/react";
 
 function AddPet() {

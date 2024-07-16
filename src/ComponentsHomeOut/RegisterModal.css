@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
+
+  .modal-auth, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+  }
+
+  .overlay {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    background: rgba(49,49,49,0.8);
+  }
+
+  .div-modal-content{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content-login {
+    width: 38.5vw;
+    height: 55vh;
+    display: flex !important;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #F7F7F7 !important;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3)!important;
+    border-radius: 1.5%;
+    overflow: hidden!important;
+  
+  }
+  .login-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 6vh;
+  }
+  .modal-content-sign{
+    margin-top: 5vh;
+    margin-bottom: 15vh;
+    width: 38vw;
+    min-height: 82vh;
+    display: flex !important;
+    align-self: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #F7F7F7 !important;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3)!important;
+    border-radius: 1.5%;
+    overflow: hidden!important;
+
+  }
+
+  .button-submit-login{
+    margin-left: 4vw;
+    width: 30vw;
+    height: 5.8vh !important;
+    background-color: #87CEEB !important;
+    font-size: 1.5vw !important;
+    font-family: "Montserrat" !important;
+
+  }
+
+  .button-exit-login{
+    width: 8vw !important;
+    margin-right: 6vw;
+    font-size: 1vw !important;
+    font-family: "Montserrat" !important;
+  }
+
+  .button-exit-sign{
+    width: 8vw !important;
+    margin-right: 6vw;
+    font-size: 1vw !important;
+    font-family: "Montserrat" !important;
+  }
+
+  .inputs-login{
+    align-self: center;
+    margin-left: 4vw;
+    width: 30vw !important;
+    height: 5.8vh !important;
+  }
+  .input-sign{
+    align-self: center;
+    margin-left: 4vw;
+    margin-bottom: 2vh;
+    width: 30vw !important;
+    height: 5.8vh !important;
+
+  }
+  .modal-content-search {
+    display: block !important;
+    position: fixed !important;
+    top: 14vh !important;
+    left: 40vw !important;
+    padding: 2% !important;
+    z-index: 999 !important;    
+    width: 350px !important;
+    max-height: 98vh;
+    background-color: #F7F7F7 !important;
+    margin: 0 auto!important;
+    border-radius: 2px!important;
+    border-radius: 3%!important;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3)!important;
+    overflow: hidden!important;
+  
+  }
+
+  .h1-modal-content {
+    margin-left: 4vw;
+    white-space: nowrap;
+    font-size: 1.8em;
+    font-family: "Montserrat"
+  }
+  .input-sign{
+    align-self: center;
+    margin-left: 4vw;
+    width: 30vw !important;
+    height: 5.8vh !important;
+
+  }
+
+  .modal-signup-button{
+    width:10vw;  
+    border-radius: 5px!important;
+    background-color: #f2f2f2!important;
+    padding: 11px 13px!important;
+    color: black!important;
+    font-weight: 600!important;
+    right: 1vw;
+    position: relative;
+    background-color: #1DA1F2 !important;
+ 
+
+
+  }
+  .modal-exit-button{
+    margin-left: 14vw !important;
+    margin-bottom:2vh;
+    
+  }
+
+  /* .modal-exit-button{
+
+   
+      position: absolute;
+      color: blue;
+      padding: 0 2px;
+      right: 1vw;
+      top: 2vh;
+      width: 25px;
+      height: 25px;
+      
+    }
+      .modal-exit-button 
+      :hover {
+      opacity: 1;
+    }
+    .modal-exit-button :before, .close:after {
+      position: absolute;
+      left: 15px;
+      content: ' ';
+      height: 33px;
+      width: 2px;
+      background-color: #333;
+    }
+    .modal-exit-button :before {
+      transform: rotate(45deg);
+    }
+    .modal-exit-button :after {
+      transform: rotate(-45deg);
+
+  } */
+
+
+ 
+  
+
+
+
+
+  
+  

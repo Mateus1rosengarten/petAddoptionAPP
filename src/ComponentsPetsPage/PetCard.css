@@ -1,0 +1,192 @@
+.div-pet-page{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+}
+
+
+.card-pet-page {
+  cursor: pointer;
+  margin-top: 2.5vh;
+  width: 40vw;
+  height: 75vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border: 2px solid black;
+}
+
+.card-content{
+    display: flex;
+    flex-direction: row;
+}
+
+.info-card {
+  margin: 2%;
+  padding: 1%;
+  margin-left: 1vw;
+  width: 22vw;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.div-card-info{
+    margin-bottom: 2vh;
+}
+
+.div-card-info:last-child{
+  width: 38vw;
+}
+
+.div-card-buttons{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3vh;
+    margin-right: 1vw;
+    height: 30vh;
+}
+
+.cardMyPet {
+  position: absolute;
+  width: 200px;
+  height: 250px;
+  top: 0px;
+  left: 0px;
+  border: 1px solid blue;
+}
+
+.card-pet-label {
+  font-family: "Montserrat";
+  font-size: 2.2vh;
+  white-space: nowrap;
+  display: inline;
+  font-weight: bolder;
+}
+
+.card-pet-infos {
+  font-family: "Montserrat";
+  font-size: 2vh;
+  white-space: nowrap;
+  display: inline;
+  
+}
+
+.card-pet-infos:last-child {
+  flex-wrap: wrap;
+  white-space: pre-wrap;
+  word-break: break-all;
+  ;
+  text-align: left;
+}
+
+.img-card {
+    width: 100vw;
+    height:33vh;
+}
+
+.field-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.field-label {
+  font-weight: bold;
+}
+
+.field-value {
+  /* Add styling for the value here, e.g., margin-left, color, etc. */
+  margin: 4%;
+}
+
+.div-cardsPets {
+  position: absolute;
+  top: 100px;
+  left: 25vw;
+  height: 90vh;
+  width: 90vw;
+  border: solid 1px black;
+}
+
+.addopt-button{
+margin-bottom: 2vh;
+border-radius: 5px!important;
+background-color: #f2f2f2!important;
+color: #1DA1F2;
+font-weight: 600!important;
+width: 13vw;
+height: 8vh;
+
+}
+
+.foster-button {
+  margin-bottom: 2vh;
+  border-radius: 5px!important;
+  background-color: #f2f2f2!important;
+  color: #1DA1F2;
+  font-weight: 600!important;
+  width: 13vw;
+  height: 8vh;
+}
+
+.return-button{
+  position: absolute;
+  bottom: 32vh;
+  left:53vw;
+  border-radius: 5px!important;
+  background-color: #f2f2f2!important;
+
+  color: #1DA1F2;
+  font-weight: 600!important;
+  width: 100px;
+}
+
+.save-buton{
+  border-radius: 5px!important;
+  background-color: #f2f2f2!important; 
+  color: #1DA1F2;
+  font-weight: 600!important;
+  width: 13vw;
+  height: 8vh;
+}
+
+.save-button-disabled{
+  border-radius: 5px!important;
+  background-color: #f2f2f2!important; 
+  opacity: 0.5;
+  color: #1DA1F2;
+  font-weight: 600!important;
+  width: 13vw;
+  height: 8vh;
+}
+.unSave-buton{
+  position: absolute;
+  bottom: 12vh;
+  left: 53vw;
+  border-radius: 5px!important;
+  background-color: #f2f2f2!important;
+  padding: 11px 13px!important;
+  color: #1DA1F2;
+  font-weight: 600!important;
+  width: 100px;
+}
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens */
+  .card {
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+  .info-card {
+    font-size: 14px;
+    margin-top: 30vh;
+  }
+
+  .field-label .field-value {
+    margin: 0;
+    padding: 0;
+    margin-left: 10vw;
+  }
+}

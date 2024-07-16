@@ -1,51 +1,49 @@
 .navbar-style{
-    background-color: #fff;
-    height: 65px!important;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    background-color: #87CEEB;
+    width: 100vw;
+    height: 12vh!important;
     border: 1px solid #e5e5e5;
-    border-radius: 0;
-    z-index: 2;
     box-shadow: 0 -10px 50px #333;
-    position: fixed;
-    width: 100%;
-    top:0
+   
 }
 
-ul {
-    list-style-type: none;
-    text-decoration: none;
+.navbar-links{
+    margin-left: 2vw;
+    
 }
+
+
 
 .adm-link {
-    margin-left: 110px;
-    display: inline;
+    font-size: 5vw;
+  
 }
 
 .mypets-link {
-    margin-left: 100px ;
-    display: inline;
+    font-family: "Montserrat";
+    font-size: 2.2vw !important;
+
 }
 .profile-link {
-    margin-left: 0px;
-    display: inline;
+    margin-right: 3vw;
+    font-family: "Montserrat";
+    font-size: 2.2vw !important;
+   
 }
 
-.search-loged-link {
-    margin-left: 90px;
-    display: inline;
+.search-link {
+    margin-right: 3vw;
+    font-family: "Montserrat";
+    font-size: 2.2vw !important;
+
+  
 }
 
-.button-logout{
-    position: absolute;
-    right: 190px;
-    top: 0;
-    border-radius: 5px!important;
-    background-color: #f2f2f2!important;
-    padding: 11px 13px!important;
-    color: #1DA1F2!important;
-    font-weight: 600!important;
-    margin: 5px;
-    
-    }
+
 
     .styleh1{
         color: #fff;

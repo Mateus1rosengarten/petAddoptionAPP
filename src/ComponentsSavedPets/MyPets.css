@@ -1,0 +1,60 @@
+.my-pets-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+
+}
+
+.title-saved-pets{
+    font-family: 'Montserrat';
+    font-size: 3vw;
+    margin-top: 10vh;
+    align-self: center;
+}
+
+
+
+.saved-list {
+    margin-left: 2vw;
+    margin-bottom: 10vh;
+    width: 100vw;
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(30vw,1fr));
+    gap: 2vw;
+    justify-content: center !important;
+
+  }
+
+
+
+
+  .saved-h1 {
+    font-family: Arial, Helvetica, sans-serif !important;
+
+  
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  
+  .saved-h1-no {
+    font-family: Arial, Helvetica, sans-serif !important;
+  
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .fostered-h1 {
+    font-family: Arial, Helvetica, sans-serif !important;
+
+    white-space: nowrap;
+    font-weight: bold;
+  }
+  
+  .fostered-h1-no {
+    font-family: Arial, Helvetica, sans-serif !important;
+
+   
+    white-space: nowrap;
+    font-weight: bold;
+  }

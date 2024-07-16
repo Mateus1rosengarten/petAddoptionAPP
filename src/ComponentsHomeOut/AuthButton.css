@@ -1,16 +1,51 @@
 .button-login,.button-signUp{
-    
-    border-radius: 5px!important;
-background-color: #f2f2f2!important;
-padding: 11px 13px!important;
+    margin-right: 1vw;
+border-radius: 1vh!important;
+background-color: #f2f2f2;
+width: 9vw;
+height: 8vh;
 color: #1DA1F2;
+font-size: 1.5vw;
 font-weight: 600!important;
-margin: 5px;
+
 
 }
 
+.button-login-disabled ,.button-signUp-disabled{
+margin-right: 1vw;
+border-radius: 1vh!important;
+background-color: #f2f2f2;
+opacity: 0.5;
+width: 9vw;
+height: 8vh;
+color: #1DA1F2;
+font-size: 1.5vw;
+font-weight: 600!important;
+
+}
+
+.button-logout{
+    margin-right: 2vh;
+    border-radius: 1vh!important;
+    background-color: #f2f2f2!important;
+    width: 9vw;
+    height: 8vh;
+    color: #1DA1F2;
+    font-size: 1.5vw;
+    font-weight: 600!important;
+    
+    }
+
 .buttons-div{
-    position: absolute;
-    right: 10px;
-    top: 0;
+    margin-left: 20vw;
+    display: flex;
+    justify-content: space-evenly;
+    width: 30vw;
+}
+
+.buttons-div-unlogged{
+    margin-left: 30vw;
+    display: flex;
+    justify-content: space-evenly;
+    width: 20vw;
 }

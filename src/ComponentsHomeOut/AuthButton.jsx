@@ -2,23 +2,30 @@ import { useContext } from "react";
 import "./AuthButton.css";
 import { authStates } from "../Context/AuthContext";
 
-function AuthButton({ handleLogin, handleSignUp }) {
-  const { authState, setAuthState } = useContext(authStates);
+function AuthButton({ handleLogin, handleSignUp,handleLogout }) {
+  const { isUserLoged } = useContext(authStates);
   return (
-    <div className="buttons-div">
+    <div className={isUserLoged ? "buttons-div" : "buttons-div-unlogged"}>
+      {isUserLoged && (
+        <button className="button-logout" 
+         onClick={handleLogout}>
+          Sair
+        </button>
+      )}
       <button
-        disabled={authState.email && true}
+        
+        disabled={isUserLoged && true}
         onClick={handleLogin}
-        className="button-login"
+        className= {!isUserLoged ? "button-login" : "button-login-disabled"}
       >
-        Login
+        Entrar
       </button>
       <button
-        disabled={authState.email && true}
+        disabled={isUserLoged && true}
         onClick={handleSignUp}
-        className="button-signUp"
+        className= {!isUserLoged ? "button-signUp" : "button-signUp-disabled"}
       >
-        SignUp
+        Cadastro
       </button>
     </div>
   );

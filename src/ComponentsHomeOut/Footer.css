@@ -1,0 +1,34 @@
+.footer-style{
+    z-index: 1;
+display: flex;
+position: fixed;
+bottom: 0;
+flex-direction: row;
+align-items: flex-start;
+justify-content:space-between;
+background-color: #87CEEB;
+width: 100vw;
+height: 8vh!important;
+border: 1px solid #e5e5e5;
+box-shadow: 0 -10px 50px #333;}
+
+.footer-text{
+    margin-top: 1vh;
+    margin-left: 2vw;
+    font-size: 1.94vh;
+    font-family: 'Montserrat';
+    width: 50vw;
+}
+.div-other-texts{
+    margin-top: 1vh;
+    margin-right: 2vw;
+    display: flex;
+    flex-direction: column;
+}
+.footer-other-text{
+   
+    
+    font-size: 1.94vh;
+    font-family: 'Montserrat';
+    font-style: italic;
+}

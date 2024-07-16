@@ -1,13 +1,13 @@
-import UserList from "./UserList";
+import UsersList from "./UserList";
 import "./Adm.css";
 import { petContext } from "../../Context/PetContext";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
-import MyPetsCard from "../../ComponentsMyPets/MyPetsCard";
+import MyPetsCard from "../../ComponentsSavedPets/MyPetsCard";
 
 function DashBoard() {
   const [searchList, setSearchList] = useState(false);
-  const { petInfo, setPetInfo } = useContext(petContext);
+  const { petInfo} = useContext(petContext);
   const navigate = useNavigate();
 
   setTimeout(() => {
@@ -16,28 +16,15 @@ function DashBoard() {
 
   return (
     <>
-      <div className="users-list ">
-        <UserList> </UserList>
-      </div>
-
-      <hr className="hr-list" />
-
-      <button
-        onClick={() => {
-          navigate("/adm/addpet");
-        }}
-        className="addpet-button"
-      >
-        ADD NEW PET
-      </button>
-
-      <div className="result-pet-list">
+    <div className="div-all-pets"> 
+      <h1 className="h1-all-pets">Todos os Pets</h1>
+     <div className="result-pet-list">
         {searchList &&
           petInfo.map((item) => {
             return (
               <>
              <MyPetsCard 
-             cardImage={item.image}
+             cardImage={item.images[0]}
              cardName={item.name}
              cardStatus={item.status}
              handleButton={() => {navigate(`/pet/${item.name}`)}}
@@ -46,6 +33,15 @@ function DashBoard() {
             );
           })}
       </div>
+      </div>
+
+      <hr className="hr-list" />
+
+      <div className="div-users-list ">
+        <UsersList> </UsersList>
+      </div>
+
+
     </>
   );
 }

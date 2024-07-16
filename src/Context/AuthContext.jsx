@@ -5,76 +5,46 @@ import axios from "axios";
 export const authStates = createContext();
 
 function AuthContext({ children }) {
-  const [value, setValue] = useState({});
+  const [registerValue, setRegisterValue] = useState({});
+  const [loginObject, setLoginObject] = useState(undefined);
+  const [isUserLoged, setIsUserLoged] = useState(
+    Boolean(localStorage.getItem("apiKey"))
+  );
 
-  const [tokenValue, setTokenValue] = useState("");
-  const [loginObject, setLoginObject] = useState('');
-  const [authState, setAuthState] = useState({
-    name: '',
-    lastName: '',
-    id: 0,
-    email: '',
-    number: '',
+
+  const [userLogedData, setUserLogedData] = useState(() => {
+    const savedUserData = localStorage.getItem("UserLogedData");
+    return savedUserData
+    ? JSON.parse(savedUserData)
+    : {
+    name: undefined,
+    lastName: undefined,
+    id: undefined,
+    email: undefined,
+    number: undefined,
     status: false,
     role: "user",
-  });
+  }});
 
-  useEffect(() => {
-    setTokenValue(localStorage.getItem("apiKey"));
-   
-  }, []);
+
+
+
+
+
   
-
- let response 
-
-// {setTimeout(() => {
-//   setLoginObject(response)
-//   console.log('agora',loginObject)
-  
-// }, 10000);}
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        response = await axios.get("http://localhost:3000/auth", {
-          headers: {
-            accessToken: tokenValue,
-          },
-        });
-        if (response.data.error) {
-          console.log("No success in AUTH", response.data.error);
-          setAuthState((prevState) => ({ ...prevState, status: false }));
-        } else {
-          console.log("AUTH USER INFOS", response.data);
-          console.log('token',tokenValue)
-          setAuthState({
-            name: response.data.name,
-            lastName : response.data.lastName,
-            number : response.data.number,
-            email: response.data.email,
-            status: true,
-            role:response.data.role
-          })
-        }
-      } catch (error) {
-        console.log("fetchData error:", error);
-        setAuthState((prevState) => ({ ...prevState, status: false }));
-      }
-    };
-    fetchData();
-  }, [tokenValue]);
 
   return (
     <authStates.Provider
       value={{
-        value,
-        setValue,
-        tokenValue,
-        setTokenValue,
+        isUserLoged,
+        setIsUserLoged,
+        registerValue,
+        setRegisterValue,
         loginObject,
         setLoginObject,
-        authState,
-        setAuthState,
+        userLogedData,
+        setUserLogedData,
+        
       }}
     >
       {children}

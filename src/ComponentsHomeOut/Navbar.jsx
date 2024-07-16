@@ -1,110 +1,134 @@
 import "./Navbar.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import AuthButton from "./AuthButton";
-import AuthModal from "./AuthModal";
+import RegisterModal from "./RegisterModal";
 import LoginModal from "./LoginModal";
-import { useContext } from "react";
-import { globalStates } from "../Context/StatesContexts";
-import { NavLink } from "react-router-dom";
+import { globalStates } from "../Context/GlobalContexts";
+import { NavLink, useNavigate } from "react-router-dom";
 import { authStates } from "../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer,toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaw, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { usersContext } from "../Context/UserContext";
 
 function Navbar() {
-  const [modal, setModal] = useState(false);
-  const [log, setLog] = useState(false);
   const { isModal, setIsModal } = useContext(globalStates);
-  const { authState, setAuthState } = useContext(authStates);
-  const { loginObject, setLoginObject } = useContext(authStates);
+  const { setDataUpdate } = useContext(usersContext);
+  const { setLoginObject, setIsUserLoged, isUserLoged } =
+    useContext(authStates);
   const navigate = useNavigate();
 
   const signUpHandle = () => {
-    setModal(!modal);
-    setIsModal(!isModal);
+    setIsModal({ ...isModal, signUp: !isModal.signUp });
   };
 
   const loginHandle = () => {
-    setLog(!log);
-    setIsModal(!isModal);
+    setIsModal({ ...isModal, login: !isModal.login });
   };
 
-  const logoutFunction = () => {
+  const logoutHandle = () => {
     window.localStorage.clear();
-    setLoginObject("");
+    setIsUserLoged(false);
+    setDataUpdate('')
+    setLoginObject('');
     navigate("/");
-    navigate(0);
   };
-
-
 
   return (
     <div className="navbar-style">
-      <ul>
-
-
-
-        { !authState.email ?
-
-<li onClick={() => { toast('Please login or create an account to use the APP')} }  className="profile-link">
- 
-  <NavLink to={"/"}>Profile</NavLink> </li> :  <li className="profile-link"> <NavLink to={"/profile"}>Profile</NavLink>  
-  </li> } 
-      
-
-        { !authState.email ?
-
-        <li onClick={() => { toast('Please login or create an account to use the APP')} }  className="search-loged-link">
-         
-          <NavLink to={"/"}>Search</NavLink> </li> :  <li className="search-loged-link"> <NavLink to={"/search"}>Search</NavLink>  
-          </li> } 
-
-          
-
-
-  
-
-
-        { !authState.email ?
-
-      <li onClick={() => { toast('Please login or create an account to use the APP')} }  className="mypets-link">
- 
-    <NavLink to={"/"}>My Pets</NavLink> </li> :  <li className="mypets-link"> <NavLink to={"/mypets"}>My Pets</NavLink>  
-  </li> } 
-      
-
-
-        {authState.email === "mateus.rosengartenn@gmail.com" && (
-          <li className="adm-link">
-            <NavLink to={"/adm"}>Dash</NavLink>
-          </li>
+      <div className="navbar-links">
+        {!isUserLoged ? (
+          <>
+            <NavLink
+              onClick={() => {
+                toast("Faca Login para ter acessao ao site");
+              }}
+              className="profile-link"
+            >
+              <FontAwesomeIcon
+                icon={faUser}
+                style={{ marginRight: "0.5vw", height: "3.5vh" }}
+              />
+              Meu Perfil
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink className="profile-link" to={"/profile"}>
+              <FontAwesomeIcon
+                icon={faUser}
+                style={{ marginRight: "0.5vw", height: "3.5vh" }}
+              />
+              Meu Perfil
+            </NavLink>
+          </>
         )}
 
-        <li>
+        {!isUserLoged ? (
+          <>
+            <NavLink
+              onClick={() => {
+                toast("Faca Login para ter acessao ao site");
+              }}
+              className="search-link"
+            >
+              <FontAwesomeIcon
+                icon={faSearch}
+                style={{ marginRight: "0.5vw", height: "3.5vh" }}
+              />
+              Buscar
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink className="search-link" to={"/search"}>
+              <FontAwesomeIcon
+                icon={faSearch}
+                style={{ marginRight: "0.5vw", height: "3.5vh" }}
+              />
+              Buscar
+            </NavLink>
+          </>
+        )}
 
-          <ToastContainer />
-          {" "}
-          <AuthButton
-            handleSignUp={signUpHandle}
-            handleLogin={loginHandle}
-          ></AuthButton>{" "}
-        </li>
+        {!isUserLoged ? (
+          <>
+            <NavLink
+              onClick={() => {
+                toast("Faca Login para ter acessao ao site");
+              }}
+              className="mypets-link"
+            >
+              <FontAwesomeIcon
+                icon={faPaw}
+                style={{ marginRight: "0.5vw", height: "3.5vh" }}
+              />
+              Pets Salvos
+            </NavLink>
+          </>
+        ) : (
+          <>
+            <NavLink className="mypets-link" to={"/mypets"}>
+              <FontAwesomeIcon
+                icon={faPaw}
+                style={{ marginRight: "0.5vw", height: "3.8vh" }}
+              />
+              Pets Salvos
+            </NavLink>
+          </>
+        )}
+      </div>
+      <ToastContainer />
 
-        <li>
-          {modal && <AuthModal toggleModal={signUpHandle}></AuthModal>}
-          {log && <LoginModal toggleModal={loginHandle}></LoginModal>}
-        </li>
+      <AuthButton
+        handleSignUp={signUpHandle}
+        handleLogin={loginHandle}
+        handleLogout={logoutHandle}
+      />
 
-        <li>
-          {authState.status && (
-            <button className="button-logout" onClick={logoutFunction}>
-              Logout
-            </button>
-          )}
-        </li>
-      </ul>
+      {isModal.signUp && <RegisterModal toggleModal={signUpHandle} />}
+      {isModal.login && <LoginModal toggleModal={loginHandle} />}
     </div>
   );
 }

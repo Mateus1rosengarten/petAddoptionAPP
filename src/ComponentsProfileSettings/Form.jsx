@@ -1,231 +1,295 @@
 import { useContext, useState } from "react";
 import "./Form.css";
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-} from "@chakra-ui/react";
-import {
-  PhoneIcon,
-  LockIcon,
-  CheckCircleIcon,
-} from "@chakra-ui/icons";
+import { Box, FormControl, FormLabel, Input, Button,Spinner } from "@chakra-ui/react";
+import { PhoneIcon, LockIcon, CheckCircleIcon } from "@chakra-ui/icons";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-import { userStates} from "../Context/UserContext";
-
+import { usersContext } from "../Context/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaw } from "@fortawesome/free-solid-svg-icons";
+import { NavLink } from "react-bootstrap";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 function Form({
   handleUpdate,
+  handleUpdatePic,
   nameValue,
   lastNameValue,
   numberValue,
-  ImgFromMongo,
+  imageValue,
+  
 }) {
+  const navigate = useNavigate();
 
-  const { userImage,setUserImage } = useContext(userStates)
-  const { update, setUpdate } = useContext(userStates); 
-  const {setTrigger} = useContext(userStates)
+  const [numberFormated, setNumberFormated] = useState('');
+  const { userImage, setUserImage,dataUpdate, setDataUpdate,isLoading,setIsLoading } = useContext(usersContext);
+ 
+    const objectStorage = localStorage.getItem("userLogedData");
+    const objectParsed = JSON.parse(objectStorage);
+    console.log("Object Parsed", objectParsed);
+    
+
 
   useEffect(() => {
     console.log("new photo", userImage);
   }, [userImage]);
 
   const handleChanges = () => {
-
-    uploadImage();
-
-    if (update.password !== update.repeatPass) {
-      toast("Please insert the same Password");
-    } else if (update.password?.length <= 8) {
-      toast("The password needs to contain at least 8 characteres");
-    } else if (!update.name || update.name.length < 3) {
-      toast("Please insert a valid Name");
-    } else if (!update.lastName || update.lastName.length < 3)
-      toast("Please insert a valid LastName");
-    else if (update.numberValue?.length > 5)
-      toast("Please insert a valid Number");
+    if (dataUpdate.password !== dataUpdate.repeatPass) {
+      toast("Insira a mema senha");
+    } else if (dataUpdate.password?.length <= 8) {
+      toast("A senha deve ter ao minimo 8 caracteres");
+    } else if (!dataUpdate.name || dataUpdate.name.length < 3) {
+      toast("Insira um nome valido");
+    } else if (!dataUpdate.lastName || dataUpdate.lastName.length < 3)
+      toast("Insira um sobrenome valido");
+    else if (dataUpdate.number?.length < 10)
+      toast("Insira um numero de telefone valido com DDD");
     else {
-      console.log("update On UploadImage Function", update);
-       
-      
      
+      handleUpdate();
+      console.log("update On UploadImage Function", dataUpdate);
     }
   };
 
+  const formatTelNumber = (number) => {
+    let cleanedNumber = number.replace(/\D/g, "");
+    cleanedNumber = cleanedNumber.slice(0, 11);
 
-
-  const uploadImage = async () => {                                             //// SENDING TO IMAGE CLOUDINARY SERVER AND RECEVEING LINK
-    if (userImage) {
-    const formData = new FormData();
-    formData.append("file", userImage);
-    console.log("FORMDATA", formData);
-
-    try {
-      const response = await fetch("http://localhost:3000/useradd/pic", {
-        method: "POST",
-        body: formData,
-      });
-
-      console.log(
-        "response after sending the formdata with the image to cloud",
-        response
-      );
-
-      if (response.ok) {  
-        console.log("response to send new pic to CLOUD", response);
-        const data = await response.json();
-        console.log("response to send new pic in json format:", data);
-        console.log("IMAGE URL send by cloud", data.url); //
-        const imageUrl = data.url;
-
-        try {
-
-          update.image = data.url
-      
-
-          setTimeout(() => {
-            setTrigger(true)
-            
-          }, 10000);
-
-
-          setUserImage(imageUrl);
-        } catch (error) {
-          console.log("ERRO", error);
-        }
-      } else {
-        console.error("Failed to upload image");
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    } finally {
-  
-      console.log("UPDATE STATE ON END OF UPLOAD IMG FUNCTION", update);
-      console.log("USER IMAGE STATE ON END OF UPLOAD IMG FUNCTION", userImage);
-      handleUpdate()
+    if (cleanedNumber.length === 10) {
+      return `(${cleanedNumber.slice(0, 2)}) ${cleanedNumber.slice(
+        2,
+        6
+      )}-${cleanedNumber.slice(6)}`;
+    } else if (cleanedNumber.length === 11) {
+      return `(${cleanedNumber.slice(0, 2)}) ${cleanedNumber.slice(
+        2,
+        7
+      )}-${cleanedNumber.slice(7)}`;
+    } else {
+      return cleanedNumber;
     }
-  }};
+  };
 
-  return (
-    <>
-      <img
-        src={
-      ImgFromMongo ||  userImage || update.image }
-        alt=""
-        className="user-img"
-      />
-
-      <Box
-        maxWidth="600px"
-        margin="auto"
-        padding="20px"
-        marginTop="10vw"
-        marginLeft="10vw"
-      >
-        <FormControl marginBottom="20px">
-          <FormLabel>
-            <CheckCircleIcon mr={2} style={{color:'brown'}}  />
-            Name
-          </FormLabel>
-
-          <Input
-            placeholder={nameValue}
-            type="text"
-            onChange={(e) => setUpdate({ ...update, name: e.target.value })}
-            id="name"
-          />
-        </FormControl>
-
-        <FormControl marginBottom="20px">
-          <FormLabel>
-            <CheckCircleIcon mr={2} style={{color:'brown'}} />
-            Last Name
-          </FormLabel>
-          <Input
-            type="text"
-            placeholder={lastNameValue}
-            onChange={(e) =>
-              e.target.value.length !== 0 &&
-              setUpdate({ ...update, lastName: e.target.value })
-            }
-            id="lastName"
-          />
-        </FormControl>
-
-        <FormControl marginBottom="20px">
-          <FormLabel>
-            <PhoneIcon mr={2} style={{color:'brown'}} />
-            Phone Number
-          </FormLabel>
-          <Input
-            type="tel"
-            placeholder={numberValue}
-            onChange={(e) =>
-              e.target.value.length !== 0 &&
-              setUpdate({ ...update, number: e.target.value })
-            }
-            id="phone"
-          />
-        </FormControl>
-
-        <FormControl marginBottom="20px">
-          <FormLabel>
-            <LockIcon mr={2} style={{color:'brown'}}  />
-            New Password
-          </FormLabel>
-          <Input
-            type="password"
-            placeholder="Insert new password"
-            onChange={(e) =>
-              e.target.value.length !== 0 &&
-              setUpdate({ ...update, password: e.target.value })
-            }
-            id="pass"
-          />
-        </FormControl>
-
-        <FormControl marginBottom="20px">
-          <FormLabel>
-            <LockIcon mr={2} style={{color:'brown'}}  />
-            Repeat Password
-          </FormLabel>
-          <Input
-            type="password"
-            placeholder="Repeat new password"
-            onChange={(e) =>
-              e.target.value.length !== 0 &&
-              setUpdate({ ...update, repeatPass: e.target.value })
-            }
-            id="passConfirmation"
-          />
-        </FormControl>
+  const handleChangePic = (event) => {
+    setIsLoading(true);
+    if (event.target.files[0]) {
+      setUserImage(event.target.files[0])
+      uploadImage(event.target.files[0]);
+    };
+    console.log('User Image in handleChangePic Function',userImage)
 
    
 
-        <FormControl position="absolute" right="23vw" top="48vh" width="20vw">
-          <Input
-            type="file"
-            name="image"
-            id="imageOf"
-            onChange={(e) => {
-              setUserImage(e.target.files[0]);
-            }}
-          ></Input>
-        </FormControl>
+  };
 
-        <Button
-          style={{ color: "#1DA1F2 !important" }}
-          onClick={handleChanges}
-          colorScheme="linkedin"
-          marginTop="20px"
-          width="100%"
+  const uploadImage = async (file) => {
+    console.log('User Image in uploadImage Function',userImage)
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log("FORMDATA", formData);
+
+      try {
+        const response = await axios.post("http://localhost:3000/useradd/pic", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        });
+      
+        console.log(
+          "response after sending the formdata with the image to cloud",
+          response
+        );
+      
+        if (response.status !== 200) {
+          console.log("Failed get response from request");
+          return;
+        }
+      
+        const data = response.data;
+        console.log("IMAGE URL send by cloud", data.url);
+        dataUpdate.image = data.url;
+     
+        setUserImage(data.url);
+        handleUpdatePic(data.url);
+        
+      } catch (error) {
+        console.log("Error in upload image function", error);
+        setIsLoading(false)
+        toast(`Erro : Insira fotos apenas nos formatos png ou jpeg`);
+
+      }
+    }
+  };
+
+  return (
+    <>
+      <div className="div-profile-page">
+        <Box width="40vw" marginRight="10vw" marginTop="8vh" marginLeft="5vw">
+          <FormControl marginBottom="20px">
+            <FormLabel fontFamily={"Montserrat"}>
+              <CheckCircleIcon mr={2} style={{ color: "brown" }} />
+              Nome
+            </FormLabel>
+
+            <Input
+              placeholder={nameValue}
+              type="text"
+              onChange={(e) =>
+                setDataUpdate({ ...dataUpdate, name: e.target.value })
+              }
+              id="name"
+            />
+          </FormControl>
+
+          <FormControl marginBottom="20px">
+            <FormLabel fontFamily={"Montserrat"}>
+              <CheckCircleIcon mr={2} style={{ color: "brown" }} />
+              Sobrenome
+            </FormLabel>
+            <Input
+              type="text"
+              placeholder={lastNameValue}
+              onChange={(e) =>
+                e.target.value.length !== 0 &&
+                setDataUpdate({ ...dataUpdate, lastName: e.target.value })
+              }
+              id="lastName"
+            />
+          </FormControl>
+
+          <FormControl marginBottom="20px">
+            <FormLabel fontFamily={"Montserrat"}>
+              <PhoneIcon mr={2} style={{ color: "brown" }} />
+              Telefone para Contato
+            </FormLabel>
+            <Input
+              value={numberFormated}
+              type="tel"
+              placeholder={numberValue}
+              onChange={(e) => {
+                const formatedNumber = formatTelNumber(e.target.value);
+                setNumberFormated(formatedNumber);
+                setDataUpdate({ ...dataUpdate, number: formatedNumber });
+              }}
+              id="phone"
+            />
+          </FormControl>
+
+          <FormControl marginBottom="20px">
+            <FormLabel fontFamily={"Montserrat"}>
+              <LockIcon mr={2} style={{ color: "brown" }} />
+              Nova senha{" "}
+            </FormLabel>
+            <Input
+              type="password"
+              placeholder="Insira nova"
+              onChange={(e) =>
+                e.target.value.length !== 0 &&
+                setDataUpdate({ ...dataUpdate, password: e.target.value })
+              }
+              id="pass"
+            />
+          </FormControl>
+
+          <FormControl marginBottom="20px">
+            <FormLabel fontFamily={"Montserrat"}>
+              <LockIcon mr={2} style={{ color: "brown" }} />
+              Repita nova senha
+            </FormLabel>
+            <Input
+              type="password"
+              placeholder="Repita mesma senha"
+              onChange={(e) =>
+                e.target.value.length !== 0 &&
+                setDataUpdate({ ...dataUpdate, repeatPass: e.target.value })
+              }
+              id="passConfirmation"
+            />
+          </FormControl>
+
+          <Button
+            style={{ backgroundColor: "#87CEEB", color: "#1DA1F2 !important" }}
+            onClick={handleChanges}
+            fontFamily={"Montserrat"}
+            fontSize={"1.6vw"}
+            width="100%"
+          >
+            <FontAwesomeIcon
+              icon={faPaw}
+              style={{ marginRight: "0.5vw" }}
+              size="sm"
+            />
+            <FontAwesomeIcon
+              icon={faPaw}
+              style={{ marginRight: "0.5vw" }}
+              size="sm"
+            />
+            <FontAwesomeIcon
+              icon={faPaw}
+              style={{ marginRight: "1.5vw" }}
+              size="sm"
+            />
+            Salvar
+            <FontAwesomeIcon
+              icon={faPaw}
+              style={{ marginLeft: "1.5vw", marginRight: "0.5vw" }}
+              size="sm"
+            />
+            <FontAwesomeIcon
+              icon={faPaw}
+              style={{ marginRight: "0.5vw" }}
+              size="sm"
+            />
+            <FontAwesomeIcon
+              icon={faPaw}
+              style={{ marginRight: "0.5vw" }}
+              size="sm"
+            />
+          </Button>
+        </Box>
+        <Box
+          width="40vw"
+          marginTop="12vh"
+          display="flex"
+          flexDirection="column"
         >
-          Save Changes
-        </Button>
-      </Box>
+          <img
+            src={
+              imageValue ||
+              "https://www.shutterstock.com/image-vector/default-avatar-profile-icon-social-600nw-1677509740.jpg"
+            }
+            alt=""
+            className="user-img"
+          />
+          <FormControl>
+            <Input
+              width="26vw"
+              marginLeft="2vw"
+              type="file"
+              name="image"
+              id="imageOf"
+              onChange={handleChangePic}
+            ></Input>
+            { isLoading && <Spinner marginLeft='1vw' marginTop='0vh'/> }
+          </FormControl>
+          {objectParsed.id === '650494681a2ddc4735d4aaeb' &&
+          <Button
+            backgroundColor="#87CEEB"
+            width="20vw"
+            marginTop="1vh"
+            marginLeft="5vw"
+            fontSize="1.6vw"
+            onClick={() => navigate("/adm")}
+          >
+          
+            {" "}
+            <NavLink to={"/adm"}>Dash</NavLink>
+          </Button>}
+        </Box>
+      </div>
     </>
   );
 }

@@ -1,238 +1,178 @@
-import { useEffect } from "react";
-import { useParams,useNavigate } from "react-router";
-import PetCard from "../ComponentsMyPets/PetCard";
+import { useEffect,useState } from "react";
+import { useParams, useNavigate } from "react-router";
+import PetCard from "../ComponentsPetsPage/PetCard";
 import axios from "axios";
-import { useContext } from "react";
-import { useState } from "react";
-import "../ComponentsMyPets/Card.css";
-import { authStates } from "../Context/AuthContext";
-import { userStates } from "../Context/UserContext";
-
-import { toast,ToastContainer } from "react-toastify";
-
+import { toast, ToastContainer } from "react-toastify";
+import { Spinner } from "@chakra-ui/react";
 
 function PetPage() {
-  const [fullInfoPet, setFullInfoPet] = useState({});
-  const [statusInfo, setStatusInfo] = useState("");
-  const { authState, setAuthState,value,tokenValue } = useContext(authStates);
-  const [idInfo,setIdInfo] = useState('');
-  const [fullInfoUser,setFullInfoUser] = useState('');
-  const [isAdoptOrFost,setIsAdoptOrFost] = useState(false);
-  const [isSaved,setIsSaved] = useState(false)
-  const navigate = useNavigate()
-  const {name} = useParams();
+  const [petData, setPetData] = useState({});
+  const [userDataFromStorage, setUserDataFromStorage] = useState(undefined);
+  const [petIsSaved, setPetIsSaved] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
+  const { name } = useParams();
+
+  let parsedData;
 
 
-     
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/auth", {
-          headers: {
-            accessToken: tokenValue,
-          },
-        });
-        if (response.data.error) {
-          console.log("No success", response.data.error);
-          setAuthState((prevState) => ({ ...prevState, status: false }));
-        } else {
-          console.log("success", response.data.id);
-          setIdInfo(response.data.id)
-          
-          
-        }
-      } catch (error) {
-        console.log("fetchData error:", error);
-        setAuthState((prevState) => ({ ...prevState, status: false }));
-      }
-    };
-    fetchData();
-   
+    initialize()
     
   }, []);
 
-  let myresp
+  const initialize =  () => {
+     getUserDataFromStorage();
+     checkPetStatus();
+     loadPetData();
+    
+    
+
+  }
+
+
+
+
+ 
+ const getUserDataFromStorage = async () => {
+  const dataFromStorage = localStorage.getItem("userLogedData");
+    if (dataFromStorage) {
+      parsedData = JSON.parse(dataFromStorage);
+      console.log("dataFromStorage:", parsedData);
+      setUserDataFromStorage(parsedData);
+    }
+ }
+
+  const loadPetData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/pet/${name}`);
+        console.log("pet data response", response.data);
+        setPetData(response.data.pet);
+        setLoading(false);
+        
+      } catch (error) {
+        console.error("Error fetching Pet data", error);
+      }
+    }
+
   
-  useEffect(() => {
-    if (idInfo) {
-      
-      axios.get(`http://localhost:3000/user/${idInfo}`).then((res) => {
-        console.log("mypey", res.data);
-        myresp = res.data
-       
-        if (myresp.adopted.includes(name)) {
-          setIsAdoptOrFost(true)
-        }
-      
-        if(myresp.fostered.includes(name)) {
-          setIsAdoptOrFost(true)
-        }
-        if(myresp.saved.includes(name)){
-          setIsSaved(true)
-        }
-       setFullInfoUser(res.data);
-        console.log('test',fullInfoUser)
-      });
+
+  const checkPetStatus = async () => {
+    if (parsedData) {
+      try {
+        const response = await axios.get(`http://localhost:3000/user/${parsedData.id}`);
+        console.log("user all infos response", response.data);    
+        if (response.data.saved.includes(name)) {
+          setPetIsSaved(true);
+          console.log('pet includes saved',response.data.saved,name)
+
+         }
+         else {
+          console.log('pet does not includes saved',response.data.saved,name)
+         }
+     
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+     
     }
-  }, [idInfo]);
 
+  }
 
+  
 
-  useEffect(() => {
-    if (name) {
-      console.log("id", name);
-      axios.get(`http://localhost:3000/pet/${name}`).then((res) => {
-        console.log("mypey", res.data.pet.name);
-        const petFullInfo = res.data.pet;
-        console.log("info", petFullInfo);
-        setFullInfoPet(petFullInfo);
-        setStatusInfo(res.data.pet.status);
-        if (res.data.pet.status !== 'Adopted') toast(`Hey Im looking for a home ,Could you addopt me ?`)
-      });
-    }
-  }, []);
+  const handleDeletePet = async () => {
+   try {
+    const response = await axios.post(`http://localhost:3000/deletePet`,{
+      id : petData._id})
+    console.log('response in deletePet Function',response)
+    navigate(0)
+
+   }
+   catch(error) {
+    console.log('error in deletePet Function',error)
+
+   }
+  };
 
   const handleAdopt = () => {
-    if (!authState.email) {
-      toast("Functionalitty Avaible just to loged Users,Please Login");
-    } else {
-      console.log("estado", authState);
-      axios
-        .post(`http://localhost:3000/adopt/${authState.email}/${name}`)
-        .then((res) => {
-          if (res.sucess === false) {
-            toast("Error trying to addopt");
-          } else {
-            toast("Pet Adopted !!");
-            setTimeout(() => {
-              navigate('/mypets')
+    const message = `Ola! Tenho Interesse em adotar a/o ${petData.name},poderiamos conversar sobre?`;
+    const phone = petData.ownerNumber;
 
-            },2000)
-            
-          }
-        });
-    }
+    const encodedMessage = encodeURIComponent(message);
+    const whatsAppUrl = `http://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
+
+    window.open(whatsAppUrl, "_blank");
   };
 
   const handleFoster = () => {
-    if (!authState.email) {
-      toast("Functionalitty Avaible just to loged Users,Please Login");
-    } else {
-      axios
-        .post(`http://localhost:3000/foster/${authState.email}/${name}`)
-        .then((res) => {
-          if (res.sucess === false) {
-            toast("Error trying to foster");
-          } else {
-            toast("Pet Fostered !!");
-            setTimeout(() => {
-              navigate('/mypets')
+    const message = `Ola! Tenho Interesse em dar lar temporario a/o ${petData.name} ,poderiamos conversar sobre?`;
+    const phone = petData.ownerNumber;
 
-            },2000)
-            
-          }
-        });
-    }
-  };
+    const encodedMessage = encodeURIComponent(message);
+    const whatsAppUrl = `http://api.whatsapp.com/send?phone=${phone}&text=${encodedMessage}`;
 
-  const handleReturn = () => {
-    if (!authState.email) {
-      alert("Functionalitty Avaible just to loged Users,Please Login");
-    } else {
-      axios
-        .post(`http://localhost:3000/return/${authState.email}/${name}`)
-        .then((res) => {
-          if (res.sucess === false) {
-            toast("Error trying to return");
-          } else {
-            toast("Pet Returned !!");
-            setTimeout(() => {
-              navigate('/mypets')
-
-            },2000)
-            
-          }
-        });
-    }
-  };
-
-  const handleSave = () => {
-    if (!authState.email) {
-      toast("Functionalitty Avaible just to loged Users,Please Login");
-    } else {
-      axios
-        .post(`http://localhost:3000/save/${authState.email}/${name}`)
-        .then((res) => {
-          if (res.sucess === false) {
-            toast("Error trying to save");
-          } else {
-            toast("Pet saved !!");
-            setTimeout(() => {
-              navigate('/mypets')
-
-            },2000)
-            
-          }
-        });
-    }
-  };
-
-  const handleUnSave = () => {
-    if (!authState.email) {
-      alert("Functionalitty Avaible just to loged Users,Please Login");
-    } else {
-      axios
-        .post(`http://localhost:3000/unsave/${authState.email}/${name}`)
-        .then((res) => {
-          if (res.sucess === false) {
-            toast("Error trying to Unsave");
-          } else {
-            toast("Pet Unsaved !!");
-            setTimeout(() => {
-              navigate('/mypets')
-
-            },2000)
-          
-          }
-        });
-    }
+    window.open(whatsAppUrl, "_blank");
   };
 
   
+  const handleSave = async () => {
+    if (!userDataFromStorage.email) {
+      toast("Enter na sua conta para poder salvar");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/save/${userDataFromStorage.email}/${name}`
+      );
+      if (response.data.success === false) {
+        toast("Algum Erro Aconteceu...");
+      } else {
+        toast("Pet Salvo com sucesso!");
+
+        setTimeout(() => {
+          navigate("/mypets");
+        }, 2000);
+      }
+    } catch (error) {
+      toast("Algum Erro Aconteceu...");
+      console.log("Error in handleSave Function", error);
+    }
+  };
+
+
 
   return (
     <>
-    <ToastContainer />
-      <PetCard
-      imag={fullInfoPet.image}
-        name={fullInfoPet.name}
-        status={statusInfo}
-        type={fullInfoPet.type}
-        hei={fullInfoPet.heigth}
-        wei={fullInfoPet.weight}
-        color={fullInfoPet.color}
-        bio={fullInfoPet.bio}
-        breed={fullInfoPet.breed}
-        // dietary={fullInfoPet.dieatary}
-      />
-        { fullInfoUser && 
-      <button disabled={fullInfoPet.status === 'Adopted'|| fullInfoPet.status === 'Fostered'} onClick={handleAdopt} className="addopt-button">
-        Addopt
-      </button> }
-      {fullInfoUser && <button disabled={fullInfoPet.status === 'Fostered' || fullInfoPet.status === 'Adopted'}  onClick={handleFoster} className="foster-button">
-        Foster
-      </button> }
-      {fullInfoUser &&   <button disabled={fullInfoPet.status === 'Avaible' || !isAdoptOrFost } onClick={handleReturn} className="return-button">
-        Return
-      </button> }
-      {fullInfoUser && <button disabled={isSaved} onClick={handleSave} className="save-buton">
-        Save
-      </button> }
-     {fullInfoUser &&  <button disabled={!isSaved} onClick={handleUnSave} className="unSave-buton">
-        UnSave
-      </button> }
+      <ToastContainer />
+      {loading ? (
+       <Spinner />
+      ) : (
+        userDataFromStorage && (
+          <PetCard
+            petImageOne={petData.images[0]}
+            petImageTwo={petData.images[1]}
+            petImageThree={petData.images[2]}
+            name={petData.name}
+            age={petData.idade}
+            gender={petData.genero}
+            hei={petData.size}
+            wei={petData.weigth}
+            owner={petData.ownerName}
+            bio={petData.bio}
+            handleAdopt={handleAdopt}
+            handleFoster={handleFoster}
+            handleSave={handleSave}
+            handleDeletePet={handleDeletePet}
+            userOwnerEmail={petData.ownerEmail}
+            userLogedEmail={userDataFromStorage.email}
+            isSaved={petIsSaved}
+          />
+        )
+      )}
     </>
   );
-}
 
+      }
 export default PetPage;

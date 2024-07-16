@@ -1,175 +1,72 @@
 import SearchComponent from "../ComponentsSearch/SearchBar";
-import axios from "axios";
 import { useContext } from "react";
 import { petContext} from "../Context/PetContext";
-import { useNavigate } from "react-router";
-import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, CSSReset, extendTheme, Input } from "@chakra-ui/react";
 import { useEffect } from "react";
+import PetCard from "../ComponentsSearch/PetCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import {Stack } from "@chakra-ui/react";
 
 function SearchPage() {
-  const { setPetInfo } = useContext(petContext);
-  const { queryType, setQueryType } = useContext(petContext); // STRING = CAT OR DOG
-  const { stateDogType, setStateDogType } = useContext(petContext); /// ARRAY = ALL DOGS RESULTS
-  const { stateCatType, setStateCatType } = useContext(petContext); /// ARRAY = ALL CATS RESULTS
-  const { queryDog, setQueryDog } = useContext(petContext); /// BOOLEAN = DOG IS CHECKED
-  const { queryCat, setQueryCat } = useContext(petContext); /// BOOLEAN = CAT IS CHECKED
-  const { stateFullSearch, setStateFullSearch } = useContext(petContext); /// ARRAY = ALL PETS RESULTS
-  const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
+  const [filteredResults,setFilteredResults] = useState([]);
+  const {arrayWithAllPets} = useContext(petContext);
+
 
   useEffect(() => {
-    getAllPets();
-    console.log("queryType on Mouth :", queryType);
 
-    setQueryDog(false);
-    setQueryCat(false);
 
-    console.log("All pets on Mouth :", stateFullSearch);
+    console.log("All pets on Mouth :", arrayWithAllPets);
   }, []);
 
-  const getAllPets = async () => {
+  const handleSearchByName = (petName) => {
+
     try {
-      let resp = await axios.get("http://localhost:3000/fullsearch");
-      console.log(resp.data.pets);
-      setStateFullSearch(resp.data.pets);
-      setIsLoading(false);
-      console.log("All pets after get AllPets function", stateFullSearch);
-    } catch (error) {
-      console.log("error gettin allPets", error);
+      if(petName.length === 0) {
+        setFilteredResults(arrayWithAllPets)
+        return;
+      }
+      const petSearched = arrayWithAllPets.filter(pet => pet.name.toLowerCase().includes(petName.toLowerCase()));
+      setFilteredResults(petSearched);
     }
+    catch(error) {
+      console.log('Error in handleSearchByName Function',error)
+    };
   };
 
-  const backingToAllResults = async () => {
-    try {
-      const resp = await axios.get("http://localhost:3000/fullsearch");
+ 
 
-      setStateFullSearch(resp.data.pets);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
 
   return (
     <>
       <ChakraProvider>
         <CSSReset />
-        <SearchComponent setPetInfo={setPetInfo} />
+        <SearchComponent setFilteredResults={setFilteredResults} />
+        <div className="div-search-pet-input"> 
+        <FontAwesomeIcon icon={faSearch}/>
+        <Input
+        placeholder="Procure pelo Nome do Pet"
+        onChange={(event) => handleSearchByName(event.target.value)}
+        className="search-pet-input"
+        type="text" />
+        </div>
       </ChakraProvider>
 
+     
+
       <div className="result-list">
-        {isLoading ? (
-          <Stack direction="row" spacing={4}></Stack>
-        ) : (
-          <>
-            {queryType === "Dog" &&
-              queryDog == true &&
-              Array.isArray(stateDogType) &&
-              stateDogType.map((item) => (
-                <div className="cardPet" key={item.id}>
-            
-                  <div className="containerPet">
-                    <img className="img-search" src={item.image} alt=""></img>
-                 
-                    <h4 className="h4-card">{item.name.toUpperCase()}</h4>
-                      
-                    <p
-                      className={
-                        item.status === "Adopted"
-                          ? "p-card-adopted"
-                          : item.status === "Fostered"
-                          ? "p-card-fostered"
-                          : item.status === "Avaible"
-                          ? "p-card-avaible"
-                          : "p-card"
-                      }
-                    >
-                      {item.status}
-                    </p>
-                  
+        
+        {filteredResults && filteredResults.length > 0 ? filteredResults.map((item) => (
+                    <PetCard
+                    petID={item.id}
+                    petImageOne={item.images[0]}
+                    petImageTwo={item.images[1] || item.image[0]}
+                    petImageThree={item.images[2] || item.images[0] || item.images[1] }
+                    petName={item.name}
+                    petStatus={item.status}/>
 
-                    <button
-                      onClick={() => {
-                        navigate(`/pet/${item.name}`);
-                      }}
-                      className="seemore-button"
-                    >
-                      See More
-                    </button>
-                  </div>
-                </div>
-              ))}
-            {queryType === "Cat" &&
-              queryCat == true &&
-              Array.isArray(stateCatType) &&
-              stateCatType.map((item) => (
-                <div className="cardPet" key={item.id}>
-                  <div className="containerPet">
-                    <img className="img-search" src={item.image} alt=""></img>
-                    <h4 className="h4-card">{item.name.toUpperCase()}</h4>
-                    <p
-                      className={
-                        item.status === "Adopted"
-                          ? "p-card-adopted"
-                          : item.status === "Fostered"
-                          ? "p-card-fostered"
-                          : item.status === "Avaible"
-                          ? "p-card-avaible"
-                          : "p-card"
-                      }
-                    >
-                      {item.status}
-                    </p>
 
-                    <button
-                      onClick={() => {
-                        navigate(`/pet/${item.name}`);
-                      }}
-                      className="seemore-button"
-                    >
-                      See More
-                    </button>
-                  </div>
-                </div>
-              ))}
-            {stateFullSearch?.itExist === "not" && backingToAllResults()}{" "}
-            {(queryType === "Advanced" || (!queryCat && !queryDog)) &&
-              Array.isArray(stateFullSearch) &&
-              stateFullSearch.map((item) => (
-                <div className="cardPet" key={item.id}>
-                  <div className="containerPet">
-                    <img className="img-search" src={item.image} alt=""></img>
-                    
-                    <h4 className="h4-card">{item.name.toUpperCase()}</h4>
-                    {item.status && (
-                      <p
-                        className={
-                          item.status === "Adopted"
-                            ? "p-card-adopted"
-                            : item.status === "Fostered"
-                            ? "p-card-fostered"
-                            : item.status === "Avaible"
-                            ? "p-card-avaible"
-                            : "p-card"
-                        }
-                      >
-                        {item.status}
-                      </p>
-                    )}
-                    <button
-                      onClick={() => {
-                        navigate(`/pet/${item.name}`);
-                      }}
-                      className="seemore-button"
-                    >
-                      See More
-                    </button>
-                  </div>
-                </div>
-              ))}
-          </>
-        )}
+              ))  : <h1 className="text-no-pets-found">Nenhum pet disponivel par esta busca...</h1>}
       </div>
     </>
   );

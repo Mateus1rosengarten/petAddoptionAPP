@@ -1,35 +1,24 @@
-import { useNavigate } from "react-router";
-import { userStates } from "../../Context/UserContext";
+import { usersContext } from "../../Context/UserContext";
 const { useContext } = require("react");
-const { useState } = require("react");
 
-function UserList() {
-  const { user, setUser } = useContext(userStates);
-  const {userList, setUserList} = useContext(userStates);
-  const navigate = useNavigate();
 
-  setTimeout(() => {
-    console.log("array", user);
-    setUserList(true);
-  }, 1000);
-
+function UsersList() {
+  const { allUsersArray} = useContext(usersContext);
+  
   return (
-    <>
-      <h1>All users:</h1>
-      {userList &&
-        user.map((item) => {
+    <div className="all-users">
+      <h1 className="h1-all-pets">Todos Usuarios:</h1>
+      {allUsersArray && allUsersArray.map((item) => {
           return (
             <div
-              onClick={() => {
-                navigate(`/adm/${item._id}`);
-              }}
+            className="each-user"
             >
               {item.email}
             </div>
           );
         })}
-    </>
+    </div>
   );
 }
 
-export default UserList;
+export default UsersList;
