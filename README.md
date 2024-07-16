@@ -2,11 +2,10 @@
 
 # Pet Adoption Platform - MERN Stack
 
-Welcome to the Pet Adoption Platform, a web application built on the MERN (MongoDB, Express.js, React, Node.js) stack. This platform allows users to authenticate, search for pets, adopt or foster dogs, and manage their profiles. Additionally, administrators have access to a page displaying all users and pets stored in the database. Clone the project and install npm for run the project
+Welcome to the Pet Adoption Platform, a web application built on the MERN (MongoDB, Express.js, React, Node.js) stack. This platform allows users to authenticate, search for pets, adopt or foster dogs, and manage their profiles. Additionally, administrators have access to a page displaying all users and pets stored in the database. 
+The goal of this project is when is ready to use provide to independent individuals who rescue animals from the streets and seek homes for them.
 
-## Known Issues 
-The application is optimized for big screen resolutions, and issues may arise on smaller screens.
-Ongoing work to address design and responsiveness concerns.
+Clone the project and install npm for run the project in your local machine
 
 
 ## Features
@@ -33,4 +32,4 @@ This application is currently in active development. The following features and 
 
 Enhanced responsiveness for different screen resolutions.
 Additional features for user interaction.
-Improved design and user experience.
+
