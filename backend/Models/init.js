@@ -3,9 +3,8 @@ const UsersDAO = require("./userDAO");
 const PetDAO = require("./petDAO");
 
 module.exports.initDB = async function initDB() {
-  const MONGODB_URL =
-    "mongodb+srv://MateusRosengarten:D3PqFqCn07JY3XPI@cluster0.gb7ngqj.mongodb.net/?retryWrites=true&w=majority";
-  const DB = "petAdoption";
+  const MONGODB_URL = process.env.REACT_APP_DB_URI;
+  const DB = process.env.REACT_APP_DB_NAME;
 
   MongoClient.connect(MONGODB_URL)
     .then(async (connection) => {
@@ -18,7 +17,6 @@ module.exports.initDB = async function initDB() {
       return;
     })
     .catch((error) => {
-      console.log(error);
       console.log(`DB connection failed ${error}`);
       process.exit(1);
     });

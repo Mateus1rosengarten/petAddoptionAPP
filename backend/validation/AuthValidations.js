@@ -1,7 +1,7 @@
 const Ajv = require("ajv");
 const ajv = new Ajv();
 
-const authSchema = {
+const registerSchema = {
   type: "object",
   properties: {
     name: { type: "string" },
@@ -11,8 +11,7 @@ const authSchema = {
     repeatPassword : { type : "string"},
     number: { type: "string" },
     saved : { type: "array"},
-    fostered : { type: "array"},
-    adopted : { type: "array"}
+   
   },
   required: ["name", "lastName", "email", "password","repeatPassword", "number"],
   additionalProperties: false,
@@ -28,5 +27,5 @@ const loginSchema = {
   additionalProperties: false,
 };
 
-module.exports.RegisterValidation = ajv.compile(authSchema);
+module.exports.RegisterValidation = ajv.compile(registerSchema);
 module.exports.LoginValidation = ajv.compile(loginSchema);

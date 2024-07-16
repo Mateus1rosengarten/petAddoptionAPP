@@ -8,76 +8,100 @@ module.exports = class UsersDAO {
 
     try {
       userCollection = await connection.collection("users");
-      console.log("userscol", userCollection);
-    } catch (e) {
-      console.log(`Could not establish connection to users collection ${e}`);
+    } catch (error) {
+      console.log(`Could not establish connection to users collection ${error}`);
     }
   }
 
   static async createUser(userData) {
+    try {
     userData.created_at = new Date();
-    userData.login_attempts = 0;
     userData.role = "user";
-    userData.bio = 'Write Something About you..'
-    await userCollection.insertOne({ ...userData });
-  }
+    const userCreated = await userCollection.insertOne({ ...userData });
+    return userCreated;
+    }
+    catch(error) {
+      console.log('ERROR IN CREATEUSER DAO',error);
+    }
+  };
 
   static async getUserByEmail(email) {
-    return await userCollection.findOne({ email: email });
+    try {
+    const user = await userCollection.findOne({ email: email });
+    return user;
   }
+  catch(error) {
+    console.log('ERROR IN GETUSERBYEMAIL DAO',error);
+  };
+}
 
   static async updateUser(userEmail, userData) {
-    await userCollection.updateOne({ email: userEmail }, { $set: userData });
+    try {
+    const user = await userCollection.updateOne({ email: userEmail }, { $set: userData });
+    return user;
   }
+  catch(error) {
+   console.log('ERROR IN UPDATEUSER DAO',error);
+  }
+};
+
+static async updatePicUser(userEmail, userData) {
+  try {
+  const user = await userCollection.updateOne({ email: userEmail }, { $set: { image:userData }});
+  return user;
+}
+catch(error) {
+ console.log('ERROR IN UPDATEUSER DAO',error);
+}
+};
 
   static async getUserById(userId) {
-    return await userCollection.findOne({ _id: new ObjectId(userId) });
+    try {
+    const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+    return user;
   }
+  catch(error) {
+    console.log('ERROR IN GETUSERBYID',error);
+  }
+}
 
-  static async getUsers() {
-    return await userCollection.find({}).toArray();
-  }
+  static async getAllUsers() {
+    try {
+    const users = await userCollection.find({}).toArray();
+    return users;
 
-  static async adoptPetToUser(userEmail, pet) {
-    return await userCollection.updateOne(
-      { email: userEmail },
-      { $push: { adopted: pet } }
-    );
   }
-
-  static async fosterPetToUser(userEmail, pet) {
-    return await userCollection.updateOne(
-      { email: userEmail },
-      { $push: { fostered: pet } }
-    );
+  catch(error) {
+    console.log('ERROR IN GETALLUSERS DAO',error)
   }
-
-  static async returnPet(userEmail, pet) {
-    await userCollection.updateOne(
-      { email: userEmail },
-      { $pull: { fostered: pet } }
-    );
-    await userCollection.updateOne(
-      { email: userEmail },
-      { $pull: { adopted: pet } }
-    );
-  }
+};
 
   static async savePetToUser(userEmail, pet) {
-    return await userCollection.updateOne(
+    try {
+    const petSaved = await userCollection.updateOne(
       { email: userEmail },
       { $push: { saved: pet } }
     );
+    return petSaved;
   }
+  catch(error) {
+    console.log('ERROR IN SAVEPET DAO ',error);
+
+  }
+};
 
   static async UnSavePetFromUser(userEmail, pet) {
-    return await userCollection.updateOne(
+    try {
+    const petUnsaved = await userCollection.updateOne(
       { email: userEmail },
       { $pull: { saved: pet } }
     );
+    return petUnsaved;
   }
+  catch(error) {
+    console.log('ERROR IN UNSAVE PET DAO',error);
 
-  // static async GetUserPets(userEmail) {
-  //   return await userCollection.findOne({ email: userEmail });
-  // }
+  }
+}
+
 };

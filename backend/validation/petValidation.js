@@ -10,7 +10,6 @@ const PetSchema = {
     weight: { type: "string" },
     color: { type: "string" },
     bio: { type: "string" },
-    // dietary: { type: "string" },
     breed: { type: "string" },
   },
   required: [],

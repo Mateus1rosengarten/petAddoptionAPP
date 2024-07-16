@@ -1,85 +1,65 @@
 const PetDAO = require("../Models/petDAO");
-
 const ModelImg = require("../validation/ImageModelValidation");
-const cloudinary = require('../Utils/claudinary');
-
+const cloudinary = require("../Utils/claudinary");
 
 module.exports = class PetControllers {
-  static async createPet(req, res) {
+  static async CreatePet(req, res) {
     try {
-      const validRequest = ModelImg(req.body.file)
+      const validRequest = ModelImg(req.body.file);
       if (!validRequest) {
         return res.status(400).json({
           sucess: false,
-          message: "Something bad happened",
+          message: "No Valid Request,Problem with Picture",
         });
       }
-      else {
-        console.log('ERROR IN CREATEPET CONTROLLER,NO VALID REQUEST')
-      }
-
-      const pet = req.body;
-      const petCreated = await PetDAO.addPet(pet);
-
+      const petCreated = await PetDAO.addPet(req.body);
       res.status(200).json(petCreated);
-      console.log('PETCREATED!!!',petCreated)
+      console.log("Pet Creater Sucesfull", petCreated);
     } catch (error) {
-      res.status(404).json({ message: "something got wrong..." });
+      res.status(404).json({
+        sucess: false,
+        message: "Something got wrong on CreatePet Controller",
+      });
     }
   }
 
-  // static async pictureProvider(req,res) {
-  //   try {
-      
-  //     const result = await cloudinary.uploader.upload(req.file.path)
-  //     console.log('resultado uRL image',result)
-  //     return res.send({url : result.secure_url})
-  //   }
-  //   catch(error) {
-  //     console.log('Error uploading picture',error)
-  //   }
-
-  // }
-
-  static async getAllPets(req, res) {
+  static async GetAllPets(req, res) {
     try {
       const allPets = await PetDAO.getPets();
       res.status(200).json(allPets);
     } catch (error) {
-      res.status(404).json({ message: "something got wrong" });
+      res.status(404).json({
+        sucess: false,
+        message: "Something got wrong on GetAllPets Controller",
+      });
     }
   }
 
-  static async pictureProvider(req, res) {
-
-    const  {image} = req.body
+  static async PictureProvider(req, res) {
     try {
-      const result = await cloudinary.uploader.upload(req.file.path,{folder: 'pets'});
-      console.log('Cloudinary response:', result,);
+      const results = await Promise.all(
+        req.files.map((file) =>
+          cloudinary.uploader.upload(file.path, { folder: "pets" })
+        )
+      );
 
-      if (result.secure_url) {
-       
-        return res.status(200).json({ url: result.secure_url });
-      
+      const urls = results.map((result) => result.secure_url);
+
+      if (urls.length) {
+        return res.status(200).json({ urls });
       } else {
-        return res.status(500).json({ message: 'Failed to upload image to Cloudinary' });
+        return res.status(500).json({
+          sucess: false,
+          message: "Failed to upload images to Cloudinary",
+        });
       }
     } catch (error) {
-      console.log('Error uploading picture', error);
-      return res.status(500).json({ message: 'Failed to upload image to Cloudinary' });
+      console.log("Error uploading pictures", error);
+      res
+        .status(500)
+        .json({ message: "Something got wrong on pictureProvider Controller" });
     }
   }
-
-  // static async FindPetById(req, res) {
-  //   const { id } = req.params;
-  //   try {
-  //     const pet = await PetDAO.getPetById(id);
-
-  //     res.status(200).json({ pet: pet });
-  //   } catch {
-  //     res.status(404).json({ message: "something got wrong" });
-  //   }
-  // }
 
   static async FindPetByName(req, res) {
     const { name } = req.params;
@@ -88,7 +68,10 @@ module.exports = class PetControllers {
 
       res.status(200).json({ pet: pet });
     } catch {
-      res.status(404).json({ message: "something got wrong" });
+      res.status(404).json({
+        sucess: false,
+        message: "Something got wrong on FindPetByName Controller",
+      });
     }
   }
 
@@ -96,78 +79,40 @@ module.exports = class PetControllers {
     const { type } = req.params;
     try {
       const pet = await PetDAO.getPetsbyType(type);
-      console.log("petByType", pet);
       res.status(200).json(pet);
     } catch (error) {
-      res.status(404).json({ message: "something got wrong..." });
+      res
+        .status(404).json({ 
+            sucess: false
+          , message: "Something got wrong on FindPetByType Controlle" });
     }
   }
 
-  static async FindFullPet(req, res) {
-    const queryParameters = req.query;
-    const queryObj = {};
-    if (queryParameters.status) {
-      queryObj.status = queryParameters.status;
-    }
-    if (queryParameters.type) {
-      queryObj.type = queryParameters.type;
-    }
-    if (queryParameters.heigth) {
-      queryObj.heigth = queryParameters.heigth;
-    }
-    if (queryParameters.weight) {
-      queryObj.weight = queryParameters.weight;
-    }
-    if (queryParameters.name) {
-      queryObj.name = queryParameters.name;
-    }
-
-    try {
-      const result = await PetDAO.GetFullPet(queryObj);
-      if (result) {
-        console.log("nome", queryObj.type);
-        res.status(200).send({
-          sucess: true,
-          pets: result,
-        });
-      } else {
-        res.status(400).send({
-          sucess: false,
-          message: "Somethin got wrong ",
-        });
-      }
-    } catch (error) {
-      res.status(404).json({ message: "something got wrong " });
-    }
-  }
-
-  static async deletePet(req, res) {
-    const { id } = req.params;
+  static async DeletePet(req, res) {
+    const { id } = req.body;
     try {
       const deleted = await PetDAO.deletePet(id);
       res.status(200).json(deleted);
     } catch {
-      res.status(404).json({ message: "something got wrong" });
+      res.status(404).json({sucess:
+        false,
+        message: "Something got wrong on deletePet Controller" });
     }
   }
 
-  static async getPetsByUserId(req, res) {
+  static async GetPetsByUserId(req, res) {
     try {
-     const saved = req.saved ? await PetDAO.getPetByListOfName(req.saved) : ['false'];
-     const fostered = req.fostered ? await PetDAO.getPetByListOfName(req.fostered) : ['false'];
-     const adopted = req.adopted ? await PetDAO.getPetByListOfName(req.adopted) : ['false'];
-
-        console.log('svd',saved,fostered,adopted)
-
-        res.status(200).send({
-          success: true,
-          message: "success",
-          saved,
-          fostered,
-          adopted,
-        });
+      const saved = req.saved
+        ? await PetDAO.getPetByListOfName(req.saved)
+        : [];
+      res.status(200).json({
+        success: true,
+        saved,
+      });
     } catch (error) {
       console.log(error);
+      res.status(404).json({sucess:false,
+         message: "Something got wrong on getPetByUserId Controller" });
     }
   }
-}
+};
